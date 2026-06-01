@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent any
     tools {
         nodejs 'nodejs'
     }
@@ -18,7 +18,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git credentialsId: 'GITHUB-APP', url: 'https://github.com/chimdi247/End-to-End-Kubernetes-MERN.git'
+                git branch: 'master', url: 'https://github.com/chimdi247/End-to-End-Kubernetes-MERN.git'
             }
         }
         stage('Sonarqube Analysis') {
@@ -35,11 +35,11 @@ pipeline {
         stage('Quality Check') {
             steps {
                 script {
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token' 
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar-token'
                 }
             }
         }
-      
+
         stage('Trivy File Scan') {
             steps {
                 dir('Application-Code/backend') {
@@ -78,12 +78,12 @@ pipeline {
 }
         stage("TRIVY Image Scan") {
             steps {
-                sh 'trivy image ${REPOSITORY_URI}${AWS_ECR_REPO_NAME}:${BUILD_NUMBER} > trivyimage.txt' 
+                sh 'trivy image ${REPOSITORY_URI}${AWS_ECR_REPO_NAME}:${BUILD_NUMBER} > trivyimage.txt'
             }
         }
         stage('Checkout Code') {
             steps {
-                git credentialsId: 'GITHUB-APP', url: 'https://github.com/chimdi247/End-to-End-Kubernetes-MERN.git'
+                git branch: 'master', url: 'https://github.com/chimdi247/End-to-End-Kubernetes-MERN.git'
             }
         }
         stage('Update Deployment file') {
