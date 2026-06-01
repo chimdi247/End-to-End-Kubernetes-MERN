@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: raph247.online
+    - host: wsedf.online 
       http:
         paths:
           - path: /api

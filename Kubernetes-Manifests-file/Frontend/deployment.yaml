@@ -6,7 +6,7 @@ metadata:
   labels:
     role: frontend
     env: demo
-spec: 
+spec:
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -14,21 +14,21 @@ spec:
       maxSurge: 1
       maxUnavailable: 25%
   selector:
-    matchLabels: 
+    matchLabels:
       role: frontend
   template:
     metadata:
       labels:
         role: frontend
-    spec: 
+    spec:
       imagePullSecrets:
       - name: ecr-registry-secret
       containers:
       - name: frontend
-        image: 283104167597.dkr.ecr.eu-west-2.amazonaws.com/frontend:3
+        image: 330177108585.dkr.ecr.eu-west-2.amazonaws.com/frontend:0
         imagePullPolicy: Always
         env:
           - name: REACT_APP_BACKEND_URL
-            value: "http://raph247.online/api/tasks"
+            value: "http://api:3500/api/tasks"
         ports:
         - containerPort: 3000
